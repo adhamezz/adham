@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> Adham abdelmoezz – Frontend Developer</title>
+    <meta
+      name="description"
+      content="Frontend Developer specializing in modern, responsive UI experiences using HTML, CSS, JavaScript, React, and more."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script>
+      (function () {
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        const theme = savedTheme || "light";
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+      <nav
+        class="navbar"
+        id="navbar"
+        role="navigation"
+        aria-label="Main navigation"
+      >
+        <div class="nav-container">
+          <div class="nav-left">
+            <a href="#home" class="nav-avatar-link" aria-label="Home">
+              <img
+                src="./images/1764322605779.jpg"
+                alt="Adham Abdelmoezz"
+                class="nav-avatar"
+              />
+            </a>
+          </div>
+
+          <a href="#home" class="nav-center" aria-label="Adham Abdelmoezz">
+            Adham ezz
+          </a>
+
+          <div class="nav-right">
+            <div class="nav-menu" id="navMenu">
+              <a class="nav-link" href="#home" id="nav-home">Home</a>
+              <a class="nav-link" href="#about" id="nav-about">About</a>
+              <a class="nav-link" href="#skills" id="nav-skills">Skills</a>
+              <a class="nav-link" href="#projects" id="nav-projects">Projects</a>
+              <a class="nav-link" href="#contact" id="nav-contact">Contact</a>
+            </div>
+
+            <div class="nav-actions">
+              <button
+                class="theme-toggle"
+                id="themeToggle"
+                type="button"
+                aria-label="Toggle color theme"
+                aria-pressed="false"
+                title="Toggle dark and light mode"
+              >
+                <i class="fas fa-moon theme-icon theme-icon-dark"></i>
+                <i class="fas fa-sun theme-icon theme-icon-light"></i>
+              </button>
+            </div>
+
+            <button
+              class="hamburger"
+              id="hamburger"
+              aria-label="Toggle navigation menu"
+              aria-expanded="false"
+              aria-controls="navMenu"
+            >
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+      <div class="hero-glow hero-glow--left" aria-hidden="true"></div>
+      <div class="hero-glow hero-glow--right" aria-hidden="true"></div>
+
+      <div class="hero-container">
+        <div class="hero-content">
+          <h1 class="hero-heading">
+            <span class="hero-heading__eyebrow">HELLO, I'M</span>
+            <span class="hero-heading__name">Adham  —</span>
+            <span class="hero-heading__role">
+              <span>Frontend</span>
+            </span>
+          </h1>
+          <p class="hero-subtext">
+            Expert Frontend Developer dedicated to building high-performance,
+            accessible, and visually stunning web applications. Specialized in
+            crafting seamless user interfaces using React, TypeScript, and
+            Next.js with a focus on clean architecture and exceptional user
+            experience.
+          </p>
+          <div class="hero-cta">
+            <a href="#projects" class="btn btn-primary" id="viewProjectsBtn">
+              <i class="fas fa-rocket"></i> View Projects
+            </a>
+            <a href="#contact" class="btn btn-ghost" id="contactMeBtn">
+              <i class="fas fa-paper-plane"></i> Contact Me
+            </a>
+          </div>
+       
+        </div>
+
+        <div class="hero-visual">
+          <div class="profile-ring" aria-hidden="true">
+            <svg
+              class="ring-svg"
+              viewBox="0 0 200 200"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="100"
+                cy="100"
+                r="90"
+                fill="none"
+                stroke="url(#ringGrad)"
+                stroke-width="2"
+                stroke-dasharray="8 4"
+              />
+              <defs>
+                <linearGradient
+                  id="ringGrad"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stop-color="#00f2ff" />
+                  <stop offset="100%" stop-color="#ff00ff" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="profile-frame">
+            <img
+              src="./images/1764322605779.jpg"
+              alt="Adham  – Frontend Developer"
+              class="profile-img"
+            />
+          </div>
+          <div class="float-badge float-badge--react" aria-hidden="true">
+            <i class="fab fa-react"></i> React
+          </div>
+          <div class="float-badge float-badge--js" aria-hidden="true">
+            <i class="fab fa-js-square"></i> JS
+          </div>
+          <div class="float-badge float-badge--ts" aria-hidden="true">
+            <span class="ts-icon">TS</span> TypeScript
+          </div>
+          <div class="float-badge float-badge--next" aria-hidden="true">
+            <i class="fas fa-n"></i> Next.js
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-indicator" aria-hidden="true">
+        <span class="scroll-mouse"><span class="scroll-wheel"></span></span>
+        <span class="scroll-text">SCROLL DOWN</span>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section about-section">
+      <div class="container">
+        <div class="section-header">
+          <!-- <span class="section-tag">Who I am</span> -->
+          <h2 class="section-title">
+            About <span class="gradient-text">Me</span>
+          </h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-content">
+            <p class="about-lead">
+              I am <strong>Adham abdelmoezz</strong> – a
+              results-driven Frontend Developer with a passion for transforming
+              complex ideas into intuitive, high-impact digital realities. My
+              professional journey is defined by a commitment to bridging the
+              gap between sophisticated design and robust technical
+              implementation.
+            </p>
+            <p class="about-body">
+              With a strong analytical background as a Telecommunication
+              Specialist, I bring a unique perspective to frontend engineering,
+              prioritizing system performance, network efficiency, and
+              meticulous problem-solving. I specialize in the modern web
+              ecosystem—leveraging React, Next.js, and TypeScript to build
+              scalable applications that not only meet business goals but also
+              delight users with fluid transitions and pixel-perfect aesthetics.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section skills-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">
+            My <span class="gradient-text">Skills</span>
+          </h2>
+        </div>
+        <div
+          id="skillsContainer"
+          class="skills-container"
+          aria-label="Skills categories"
+        ></div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+      <section id="projects" class="section projects-section">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">
+              My <span class="gradient-text">Projects</span>
+            </h2>
+          </div>
+          <div id="projectsGrid" class="projects-grid"></div>
+        </div>
+      </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Let's talk</span>
+          <h2 class="section-title">
+            Get In <span class="gradient-text">Touch</span>
+          </h2>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-info">
+            <p class="contact-intro">
+              Have a project in mind or just want to say hi? I'd love to hear
+              from you. Fill in the form or reach me through social media.
+            </p>
+            <div class="contact-channels">
+              <a
+                href="https://github.com/adhamezz"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="channel-card"
+                id="contactGithub"
+              >
+                <div class="channel-icon channel-icon--github">
+                  <i class="fab fa-github"></i>
+                </div>
+                <div>
+                  <div class="channel-label">GitHub</div>
+                  <div class="channel-value">github.com/adhamezz</div>
+                </div>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/adham-ezz11/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="channel-card"
+                id="contactLinkedin"
+              >
+                <div class="channel-icon channel-icon--linkedin">
+                  <i class="fab fa-linkedin-in"></i>
+                </div>
+                <div>
+                  <div class="channel-label">LinkedIn</div>
+                  <div class="channel-value">Connect with me</div>
+                </div>
+              </a>
+             
+              <a
+                href="https://www.facebook.com/ADHAM.3ZZ123/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="channel-card"
+                id="contactFacebook"
+              >
+                <div class="channel-icon channel-icon--facebook">
+                  <i class="fab fa-facebook-f"></i>
+                </div>
+                <div>
+                  <div class="channel-label">Facebook</div>
+                  <div class="channel-value">facebook.com/ADHAM.3ZZ123</div>
+                </div>
+              </a>
+              <a
+                href="https://wa.me/971523416509"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="channel-card"
+                id="contactWhatsapp"
+              >
+                <div class="channel-icon channel-icon--whatsapp">
+                  <i class="fab fa-whatsapp"></i>
+                </div>
+                <div>
+                  <div class="channel-label">WhatsApp</div>
+                  <div class="channel-value">+971523416509</div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+            <form
+              id="contactForm"
+              class="contact-form"
+              action="https://formspree.io/f/xnnnnnnn"
+              method="POST"
+              novalidate
+            >
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name">Full Name</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Your name"
+                  required
+                  autocomplete="name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="your@email.com"
+                  required
+                  autocomplete="email"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone (optional)</label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                placeholder="phone"
+                autocomplete="tel"
+              />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                placeholder="Tell me about your project..."
+                required
+              ></textarea>
+            </div>
+              <button id="sendBtn" type="submit" class="btn btn-primary btn-full">
+                <i class="fas fa-paper-plane"></i>
+                <span id="sendBtnText">Send Message</span>
+              </button>
+            </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-meta">
+          <p class="footer-copy">
+            &copy; 2026 Adham abdelmoezz 
+          </p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-column">
+            <span class="footer-heading">Navigate</span>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </div>
+          <div class="footer-column">
+            <span class="footer-heading">Projects</span>
+            <a href="#projects">Featured Work</a>
+            <a href="https://fresh-cart-iota-nine.vercel.app/" target="_blank" rel="noopener noreferrer">FreshCart</a>
+            <a href="https://adhamezz.github.io/mealify/" target="_blank" rel="noopener noreferrer">Mealify</a>
+          </div>
+          <div class="footer-column">
+            <span class="footer-heading">Connect</span>
+            <a href="https://github.com/adhamezz" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://www.linkedin.com/in/adham-ezz11/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://www.facebook.com/ADHAM.3ZZ123/" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <a href="https://wa.me/971523416509" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <a
+      class="whatsapp-float"
+      href="https://wa.me/971523416509"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat on WhatsApp"
+      title="Chat on WhatsApp"
+    >
+      <i class="fab fa-whatsapp"></i>
+    </a>
+
+      <script src="./js/index.js"></script>
+  </body>
+</html>
