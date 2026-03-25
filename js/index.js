@@ -50,13 +50,6 @@ const projects = [
       "Modern ecommerce storefront with product discovery, cart flow, and a polished responsive shopping experience.",
   },
   {
-    title: "Grocery",
-    link: "https://grocery-r10-9lro1kcaa-amr-el-rashidys-projects.vercel.app/",
-    image: "./images/Grocery-img.png",
-    description:
-      "Responsive grocery marketplace focused on clean browsing, simple ordering, and practical UI structure.",
-  },
-  {
     title: "Yummy Meals API",
     link: "https://adhamezz.github.io/Yummy-App-/",
     image: "./images/yummy-app-img.png",
@@ -347,110 +340,58 @@ function setupProjectsCarousel() {
     });
   });
 
-  track.parentElement?.addEventListener("mouseenter", stopAutoplay);
-  track.parentElement?.addEventListener("mouseleave", startAutoplay);
+  const viewport = track.parentElement;
+  viewport?.addEventListener("mouseenter", stopAutoplay);
+  viewport?.addEventListener("mouseleave", startAutoplay);
+
+  // Drag / swipe support
+  const DRAG_THRESHOLD = 50;
+  let pointerStartX = 0;
+  let pointerDeltaX = 0;
+  let isDragging = false;
+
+  function startDrag(clientX) {
+    pointerStartX = clientX;
+    pointerDeltaX = 0;
+    isDragging = true;
+    stopAutoplay();
+    track.style.transition = "none";
+    if (viewport) viewport.style.cursor = "grabbing";
+  }
+
+  function endDrag(clientX) {
+    if (!isDragging) return;
+    pointerDeltaX = clientX - pointerStartX;
+    isDragging = false;
+    track.style.transition = "";
+    if (viewport) viewport.style.cursor = "";
+    if (Math.abs(pointerDeltaX) >= DRAG_THRESHOLD) {
+      goToSlide(pointerDeltaX < 0 ? currentIndex + 1 : currentIndex - 1);
+    } else {
+      updateCarousel();
+    }
+    startAutoplay();
+  }
+
+  if (viewport) {
+    viewport.addEventListener("mousedown", (e) => startDrag(e.clientX));
+    viewport.addEventListener("mouseup", (e) => endDrag(e.clientX));
+    viewport.addEventListener("mouseleave", (e) => {
+      if (isDragging) endDrag(e.clientX);
+    });
+    viewport.addEventListener("click", (e) => {
+      if (Math.abs(pointerDeltaX) >= DRAG_THRESHOLD) e.preventDefault();
+    }, true);
+    viewport.addEventListener("touchstart", (e) => {
+      startDrag(e.touches[0].clientX);
+    }, { passive: true });
+    viewport.addEventListener("touchend", (e) => {
+      endDrag(e.changedTouches[0].clientX);
+    }, { passive: true });
+  }
 
   updateCarousel();
   startAutoplay();
-}
-
-function setupProjectModal() {
-  let modal = document.getElementById("projectModal");
-  if (!modal) {
-    modal = document.createElement("div");
-    modal.id = "projectModal";
-    modal.className =
-      "project-modal fixed inset-0 z-[1200] hidden items-center justify-center px-4";
-    modal.innerHTML = `
-      <div class="project-modal__backdrop absolute inset-0 bg-slate-950/35 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
-      <div class="project-modal__panel relative z-10 w-full max-w-xl rounded-[28px] border border-slate-200 bg-white p-6 shadow-2xl opacity-0 scale-95 transition-all duration-300 md:p-8">
-        <button
-          type="button"
-          class="project-modal__close absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition hover:bg-slate-200 hover:text-slate-700"
-          aria-label="Close project details"
-        >
-          <i class="fas fa-xmark"></i>
-        </button>
-        <p class="project-modal__label mb-3 text-xs font-semibold uppercase tracking-[0.28em] text-indigo-500">
-          Project Overview
-        </p>
-        <h3 class="project-modal__title text-3xl font-extrabold tracking-tight text-slate-900"></h3>
-        <p class="project-modal__description mt-4 text-base leading-7 text-slate-600"></p>
-        <a
-          class="project-modal__link mt-8 inline-flex items-center gap-2 rounded-full bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700"
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span>Visit Project</span>
-          <i class="fas fa-arrow-up-right-from-square"></i>
-        </a>
-      </div>
-    `;
-    document.body.appendChild(modal);
-  }
-
-  const backdrop = modal.querySelector(".project-modal__backdrop");
-  const panel = modal.querySelector(".project-modal__panel");
-  const title = modal.querySelector(".project-modal__title");
-  const description = modal.querySelector(".project-modal__description");
-  const link = modal.querySelector(".project-modal__link");
-  const closeBtn = modal.querySelector(".project-modal__close");
-  const triggers = document.querySelectorAll("[data-project-modal]");
-  function openModal(project) {
-    if (!project) return;
-    title.textContent = project.title;
-    description.textContent = project.description;
-    link.href = project.link;
-
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
-    document.body.style.overflow = "hidden";
-
-    requestAnimationFrame(() => {
-      backdrop.classList.remove("opacity-0");
-      backdrop.classList.add("opacity-100");
-      panel.classList.remove("opacity-0", "scale-95");
-      panel.classList.add("opacity-100", "scale-100");
-    });
-  }
-
-  function closeModal() {
-    if (modal.classList.contains("hidden")) return;
-
-    backdrop.classList.remove("opacity-100");
-    backdrop.classList.add("opacity-0");
-    panel.classList.remove("opacity-100", "scale-100");
-    panel.classList.add("opacity-0", "scale-95");
-    document.body.style.overflow = "";
-
-    window.setTimeout(() => {
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-    }, 280);
-  }
-
-  triggers.forEach((trigger) => {
-    trigger.addEventListener("click", () => {
-      const project = projects.find(
-        (item) => item.title === trigger.getAttribute("data-project-modal"),
-      );
-      openModal(project);
-    });
-  });
-
-  backdrop.onclick = closeModal;
-  closeBtn.onclick = closeModal;
-  panel.onclick = (event) => event.stopPropagation();
-  modal.onclick = (event) => {
-    if (event.target === modal) closeModal();
-  };
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !modal.classList.contains("hidden")) {
-      closeModal();
-    }
-  });
 }
 
 /* ======================================================
