@@ -1781,6 +1781,17 @@ html[data-theme="dark"] .footer-heading {
   .footer-links {
     grid-template-columns: 1fr;
     width: 100%;
+    gap: 1.25rem;
+  }
+
+  .footer-column {
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-inner {
+    padding: 0 1rem;
+    gap: 1.5rem;
   }
 
   .whatsapp-float {
@@ -2343,6 +2354,12 @@ html[data-theme="dark"] .footer-heading {
 .projects-carousel__viewport {
   overflow: hidden;
   border-radius: 2rem;
+  cursor: grab;
+  user-select: none;
+}
+
+.projects-carousel__viewport.is-dragging {
+  cursor: grabbing;
 }
 
 .projects-carousel__track {
