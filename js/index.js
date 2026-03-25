@@ -347,26 +347,34 @@ function setupProjectsCarousel() {
   // Drag / swipe support
   const DRAG_THRESHOLD = 50;
   let pointerStartX = 0;
-  let pointerDeltaX = 0;
+  let lastMoveX = 0;
   let isDragging = false;
+  let shouldPreventClick = false;
+  let rafId = null;
 
   function startDrag(clientX) {
     pointerStartX = clientX;
-    pointerDeltaX = 0;
+    lastMoveX = clientX;
     isDragging = true;
+    shouldPreventClick = false;
     stopAutoplay();
     track.style.transition = "none";
-    if (viewport) viewport.style.cursor = "grabbing";
+    if (viewport) viewport.classList.add("is-dragging");
   }
 
-  function endDrag(clientX) {
+  function endDrag() {
     if (!isDragging) return;
-    pointerDeltaX = clientX - pointerStartX;
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+    const delta = lastMoveX - pointerStartX;
     isDragging = false;
     track.style.transition = "";
-    if (viewport) viewport.style.cursor = "";
-    if (Math.abs(pointerDeltaX) >= DRAG_THRESHOLD) {
-      goToSlide(pointerDeltaX < 0 ? currentIndex + 1 : currentIndex - 1);
+    if (viewport) viewport.classList.remove("is-dragging");
+    if (Math.abs(delta) >= DRAG_THRESHOLD) {
+      shouldPreventClick = true;
+      goToSlide(delta < 0 ? currentIndex + 1 : currentIndex - 1);
     } else {
       updateCarousel();
     }
@@ -374,19 +382,38 @@ function setupProjectsCarousel() {
   }
 
   if (viewport) {
-    viewport.addEventListener("mousedown", (e) => startDrag(e.clientX));
-    viewport.addEventListener("mouseup", (e) => endDrag(e.clientX));
-    viewport.addEventListener("mouseleave", (e) => {
-      if (isDragging) endDrag(e.clientX);
+    viewport.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      startDrag(e.clientX);
     });
+    viewport.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+      lastMoveX = e.clientX;
+    });
+    viewport.addEventListener("mouseup", endDrag);
+    viewport.addEventListener("mouseleave", endDrag);
     viewport.addEventListener("click", (e) => {
-      if (Math.abs(pointerDeltaX) >= DRAG_THRESHOLD) e.preventDefault();
+      if (shouldPreventClick) {
+        e.preventDefault();
+        shouldPreventClick = false;
+      }
     }, true);
+    // passive listeners allow natural vertical scroll while still detecting horizontal swipe
     viewport.addEventListener("touchstart", (e) => {
       startDrag(e.touches[0].clientX);
     }, { passive: true });
-    viewport.addEventListener("touchend", (e) => {
-      endDrag(e.changedTouches[0].clientX);
+    viewport.addEventListener("touchmove", (e) => {
+      if (!isDragging) return;
+      lastMoveX = e.touches[0].clientX;
+      const delta = lastMoveX - pointerStartX;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        track.style.transform = `translateX(calc(-${currentIndex * 100}% + ${delta}px))`;
+        rafId = null;
+      });
+    }, { passive: true });
+    viewport.addEventListener("touchend", () => {
+      endDrag();
     }, { passive: true });
   }
 

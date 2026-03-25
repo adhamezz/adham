@@ -2358,6 +2358,10 @@ html[data-theme="dark"] .footer-heading {
   user-select: none;
 }
 
+.projects-carousel__viewport.is-dragging {
+  cursor: grabbing;
+}
+
 .projects-carousel__track {
   display: flex;
   width: 100%;
